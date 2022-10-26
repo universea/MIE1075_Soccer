@@ -27,3 +27,5 @@ and cd two folders, rename _Data to UnityEnvironment_Data
 ## Training
 
 Follow steps during the train_4_players.ipynb
+
+Or python train_soccer.py
