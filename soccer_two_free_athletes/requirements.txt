@@ -1,0 +1,6 @@
+gym==0.19.0
+numpy==1.23.3
+paddle==1.0.2
+paddlepaddle==2.3.2
+parl==2.0.5
+soccer_twos==0.1.12
