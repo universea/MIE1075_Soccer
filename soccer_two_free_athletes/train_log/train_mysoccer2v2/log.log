@@ -1,0 +1,3 @@
+[33m[11-19 18:13:24 MainThread @tensorboard.py:32][0m [5m[33mWRN[0m [tensorboard] logdir is None, will save tensorboard files to train_log\train_mysoccer2v2
+View the data using: tensorboard --logdir=train_log\train_mysoccer2v2 --host=192.168.12.58
+[32m[11-19 18:13:24 MainThread @train_mysoccer2v2.py:226][0m total_steps 0, episode 0, reward 0.0, agents rewards [0.0, 0.0, 0.0, 0.0], episode steps 500

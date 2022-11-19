@@ -79,13 +79,14 @@ def run_episode(env, agents):
         steps += 1
 
         action_n = {}
-
         for agent, obs in zip(agents, obs_n):
+            print('agent=',agent)
             action_n[obs] = np.argmax(agent.sample(obs_n[obs]))
 
         next_obs_n, reward_n, done_n, _ = env.step(action_n)
 
         done = done_n['__all__']
+        print('done all = ', done)
 
         # store experience
         for i, agent in enumerate(agents):

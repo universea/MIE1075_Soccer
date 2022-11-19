@@ -105,7 +105,9 @@ def main():
 
     critic_in_dim = sum(env.obs_shape_n) + sum(env.act_shape_n)
 
-    print(env.action_space)
+    print('env.action_space=', env.action_space)
+    print('env.obs_shape_n=', env.obs_shape_n)
+    print('env.act_shape_n=', env.act_shape_n)
 
     # build agents
     agents = []
