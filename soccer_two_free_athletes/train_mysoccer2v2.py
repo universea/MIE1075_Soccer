@@ -5,7 +5,8 @@ from mlagents_envs.side_channel.engine_configuration_channel import EngineConfig
 
 from soccer_gym import TransUnity2Gym
 
-origin_env = UnityEnvironment(file_name="C://Users//raman//Documents//Pengsong//MIE1075_Soccer//buildmysoccer//SoccerTwos", seed=1, side_channels=[])
+#origin_env = UnityEnvironment(file_name="C://Users//ps//Documents//Academic//StudyInUofT//2022Fall//MIE1075//MIE1075_Soccer//buildmysoccer//SoccerTwos", seed=1, side_channels=[])
+origin_env = UnityEnvironment(file_name="C://Users//ps//Documents//Academic//StudyInUofT//2022Fall//MIE1075//MIE1075_Soccer//osoccer//UnityEnvironment", seed=1, side_channels=[])
 
 
 
@@ -96,23 +97,36 @@ def run_evaluate_episodes(env, agents, eval_episodes):
         obs_n = env.reset()
         done = False
         total_reward = 0
+        agents_reward = [0 for _ in range(env.n)]
         steps = 0
         while not done and steps < MAX_STEP_PER_EPISODE:
             steps += 1
+
             action_n = []
+            action_transform_n = []
 
             for i in range(env.n):
-                argm = np.argmax(agents[i].sample(obs_n[i]))
-                print('np.argmax(agents[i].sample(obs_n[i]))====',argm)
-                action = translate_actions(argm)
-                action_n.append(action)
-          
-            obs_n, reward_n, done_n, _ = env.step(action_n)
-            done = all(done_n)
-            for i, reward in enumerate(reward_n):
-                total_reward += reward_n[i]
 
-        eval_episode_rewards.append(total_reward)
+                # 模型输出的action类型
+                action = np.argmax(agents[i].sample(obs_n[i]))
+                action_n.append(action)
+
+                # 使用的action类型
+                action_transform = translate_actions(action)
+                action_transform_n.append(action_transform)            
+
+            obs_n, reward_n, done_n, _ = env.step(action_transform_n)
+          
+            done = False
+            if True in done_n:
+                done = True
+                print('done all = ', done)
+
+            for i in range(env.n):
+                total_reward += reward_n[i]
+                agents_reward[i] += reward_n[i]
+
+        eval_episode_rewards.append(agents_reward)
         eval_episode_steps.append(steps)
     return eval_episode_rewards, eval_episode_steps
 
@@ -154,7 +168,7 @@ def run_episode(env, agents):
 
         # compute reward of every agent
         obs_n = next_obs_n
-        for i, reward in enumerate(reward_n):
+        for i in range(env.n):
             total_reward += reward_n[i]
             agents_reward[i] += reward_n[i]
 

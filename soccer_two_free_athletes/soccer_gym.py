@@ -33,7 +33,6 @@ class TransUnity2Gym():
                     obs_s = np.concatenate([obs[0],obs[1]])
                     obs_n[agent_id_terminated] = obs_s
 
-                    print(' reset terminal_steps obs_n = ',obs_s.shape)
                 
             if len(decision_steps.agent_id) > 0:
                 for agent_id_decision in decision_steps:
@@ -41,10 +40,8 @@ class TransUnity2Gym():
                     obs  = decision_steps[agent_id_decision].obs
                     obs_s = np.concatenate([obs[0],obs[1]])
                     obs_n[agent_id_decision] = obs_s
-
-                    print(' reset decision_steps obs_n = ',obs_s.shape)
                 
-        print('reset = ',obs_n[0].shape)
+                
         return obs_n
     
     def step(self,action_n):
@@ -84,8 +81,10 @@ class TransUnity2Gym():
                     done_n[agent_id_terminated] = done
                     next_obs_n[agent_id_terminated] = obs_s
                     reward_n[agent_id_terminated] = reward
-
-                return next_obs_n, reward_n, done_n, info
+                break
+                print('p-terminal - ',len(next_obs_n),next_obs_n[0].shape,reward_n,done_n)
+                # if done_n[0] == True:
+                #     return next_obs_n, reward_n, done_n, info
 
 
             
@@ -108,20 +107,24 @@ class TransUnity2Gym():
             #print('terminal_steps.reward',terminal_steps.reward)
             #print('terminal_steps.interrupted=',terminal_steps.interrupted) 
             
-            local_done = False
             
             if len(terminal_steps.agent_id) > 0:
+                # print('terminal_steps.agent_id=',terminal_steps.agent_id)
                 for agent_id_terminated in terminal_steps:
                     
-                    done = terminal_steps[agent_id_terminated].interrupted
+                    done = True #terminal_steps[agent_id_terminated].interrupted
                     obs  = terminal_steps[agent_id_terminated].obs
-                    reward = terminal_steps[agent_id_terminated].reward
+                    reward = terminal_steps[agent_id_terminated].group_reward
                     obs_s = np.concatenate([obs[0],obs[1]])
                     
                     done_n[agent_id_terminated] = done
                     next_obs_n[agent_id_terminated] = obs_s
                     reward_n[agent_id_terminated] = reward
-                    
+                    # print('terminal_steps[agent_id_decision].group_reward=',terminal_steps[agent_id_terminated].group_reward)
+                    # print('terminal_steps.group_reward=',terminal_steps.group_reward)
+                    # print('terminal_steps[agent_id_decision].reward=',terminal_steps[agent_id_terminated].reward)
+                    # print('terminal_steps.done=',done)
+
                     # print('dddone=',done,'agent_id_terminated=',agent_id_terminated) 
                 
             if len(decision_steps.agent_id) > 0:
@@ -129,11 +132,14 @@ class TransUnity2Gym():
                 for agent_id_decision in decision_steps:
                      
                     obs  = decision_steps[agent_id_decision].obs
-                    reward = decision_steps[agent_id_decision].reward
+                    reward = decision_steps[agent_id_decision].group_reward
                     obs_s = np.concatenate([obs[0],obs[1]])
                     
                     next_obs_n[agent_id_decision] = obs_s
                     reward_n[agent_id_decision] = reward
+
+                    # print('decision_steps[agent_id_decision].group_reward=',decision_steps.group_reward)
+                    # print('decision_steps[agent_id_decision].reward=',decision_steps[agent_id_decision].reward)
                     
                     #print('agent_id_decision=',agent_id_decision) 
 
@@ -144,4 +150,3 @@ class TransUnity2Gym():
         if done_n[0] == True:  
             print(len(next_obs_n),next_obs_n[0].shape,reward_n,done_n)
         return next_obs_n, reward_n, done_n, info
-        
