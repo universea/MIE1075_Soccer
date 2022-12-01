@@ -1,3 +1,4 @@
-[33m[11-19 15:00:59 MainThread @tensorboard.py:32][0m [5m[33mWRN[0m [tensorboard] logdir is None, will save tensorboard files to train_log\train_soccer
+[33m[11-20 02:46:17 MainThread @tensorboard.py:32][0m [5m[33mWRN[0m [tensorboard] logdir is None, will save tensorboard files to train_log\train_soccer
 View the data using: tensorboard --logdir=train_log\train_soccer --host=192.168.12.58
-[32m[11-19 15:00:59 MainThread @train_soccer.py:168][0m total_steps 0, episode 0, reward -0.9148000478744507, agents rewards [0.5425999760627747, 0.5425999760627747, -1.0, -1.0], episode steps 456
+[32m[11-20 02:46:17 MainThread @train_soccer.py:168][0m total_steps 0, episode 0, reward 0.0, agents rewards [0.0, 0.0, 0.0, 0.0], episode steps 999
+[32m[11-20 02:46:21 MainThread @train_soccer.py:168][0m total_steps 999, episode 1, reward -1.2739999890327454, agents rewards [-1.0, -1.0, 0.3630000054836273, 0.3630000054836273], episode steps 637

@@ -4,11 +4,12 @@ from mlagents_envs.base_env import ActionTuple, BaseEnv, DecisionSteps, Terminal
 from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
 
 from soccer_gym import TransUnity2Gym
+engine_channel = EngineConfigurationChannel()
 
-#origin_env = UnityEnvironment(file_name="C://Users//ps//Documents//Academic//StudyInUofT//2022Fall//MIE1075//MIE1075_Soccer//buildmysoccer//SoccerTwos", seed=1, side_channels=[])
-origin_env = UnityEnvironment(file_name="C://Users//ps//Documents//Academic//StudyInUofT//2022Fall//MIE1075//MIE1075_Soccer//osoccer//UnityEnvironment", seed=1, side_channels=[])
+engine_channel.set_configuration_parameters(time_scale=10,quality_level=0)
 
-
+#origin_env = UnityEnvironment(file_name="C://Users//raman//Documents//Pengsong//MIE1075_Soccer//buildmysoccer//SoccerTwos", seed=1, side_channels=[engine_channel])
+origin_env = UnityEnvironment(file_name="C://Users//raman//Documents//Pengsong//MIE1075_Soccer//osoccer//UnityEnvironment", seed=1, no_graphics=False,side_channels=[engine_channel])
 
 
 import os
@@ -219,14 +220,15 @@ def main():
 
 
         
-    if False:#args.restore:
+    if True:#args.restore:
         # restore modle
         for i in range(len(agents)):
-            model_file = args.model_dir + '/agent_' + str(i)
+            model_file = 'model/agent_' + str(i)
             if not os.path.exists(model_file):
                 raise Exception(
                     'model file {} does not exits'.format(model_file))
             agents[i].restore(model_file)
+        print('restor model success!')
 
     total_steps = 0
     total_episodes = 0

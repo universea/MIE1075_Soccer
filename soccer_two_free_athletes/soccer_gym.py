@@ -75,7 +75,7 @@ class TransUnity2Gym():
                     
                     done = terminal_steps[agent_id_terminated].interrupted
                     obs  = terminal_steps[agent_id_terminated].obs
-                    reward = terminal_steps[agent_id_terminated].reward
+                    reward = terminal_steps[agent_id_terminated].group_reward + terminal_steps[agent_id_terminated].reward 
                     obs_s = np.concatenate([obs[0],obs[1]])
                     
                     done_n[agent_id_terminated] = done
@@ -114,7 +114,7 @@ class TransUnity2Gym():
                     
                     done = True #terminal_steps[agent_id_terminated].interrupted
                     obs  = terminal_steps[agent_id_terminated].obs
-                    reward = terminal_steps[agent_id_terminated].group_reward
+                    reward = terminal_steps[agent_id_terminated].group_reward + terminal_steps[agent_id_terminated].reward
                     obs_s = np.concatenate([obs[0],obs[1]])
                     
                     done_n[agent_id_terminated] = done
@@ -122,7 +122,7 @@ class TransUnity2Gym():
                     reward_n[agent_id_terminated] = reward
                     # print('terminal_steps[agent_id_decision].group_reward=',terminal_steps[agent_id_terminated].group_reward)
                     # print('terminal_steps.group_reward=',terminal_steps.group_reward)
-                    # print('terminal_steps[agent_id_decision].reward=',terminal_steps[agent_id_terminated].reward)
+                    # print('terminal_steps.reward=',terminal_steps.reward)
                     # print('terminal_steps.done=',done)
 
                     # print('dddone=',done,'agent_id_terminated=',agent_id_terminated) 
@@ -132,14 +132,17 @@ class TransUnity2Gym():
                 for agent_id_decision in decision_steps:
                      
                     obs  = decision_steps[agent_id_decision].obs
-                    reward = decision_steps[agent_id_decision].group_reward
+                    reward = decision_steps[agent_id_decision].group_reward + decision_steps[agent_id_decision].reward
                     obs_s = np.concatenate([obs[0],obs[1]])
                     
                     next_obs_n[agent_id_decision] = obs_s
                     reward_n[agent_id_decision] = reward
 
-                    # print('decision_steps[agent_id_decision].group_reward=',decision_steps.group_reward)
-                    # print('decision_steps[agent_id_decision].reward=',decision_steps[agent_id_decision].reward)
+                    # if decision_steps[agent_id_decision].group_reward>0 or decision_steps[agent_id_decision].reward>0:
+
+                    #     print('decision_steps[agent_id_decision].group_reward=',decision_steps[agent_id_decision].group_reward)
+                    #     print('decision_steps[agent_id_decision].reward=',decision_steps[agent_id_decision].reward)
+                    #     print('reward_n = ',reward_n)
                     
                     #print('agent_id_decision=',agent_id_decision) 
 

@@ -36,7 +36,7 @@ class MAAgent(parl.Agent):
         self.n = len(act_dim_n)
 
         self.memory_size = int(1e5)
-        self.min_memory_size = batch_size * 25  # batch_size * args.max_episode_len
+        self.min_memory_size = batch_size * 3000  # batch_size * args.max_episode_len
         self.rpm = ReplayMemory(
             max_size=self.memory_size,
             obs_dim=self.obs_dim_n[agent_index],

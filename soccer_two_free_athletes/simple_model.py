@@ -45,8 +45,8 @@ class ActorModel(parl.Model):
     def __init__(self, obs_dim, act_dim, continuous_actions=False):
         super(ActorModel, self).__init__()
         self.continuous_actions = continuous_actions
-        hid1_size = 64
-        hid2_size = 64
+        hid1_size = 512
+        hid2_size = 512
         self.fc1 = nn.Linear(
             obs_dim,
             hid1_size,
@@ -73,7 +73,7 @@ class ActorModel(parl.Model):
     def forward(self, obs):
         hid1 = F.relu(self.fc1(obs))
         hid2 = F.relu(self.fc2(hid1))
-        means = self.fc3(hid2)
+        means = F.softmax(self.fc3(hid2))
         if self.continuous_actions:
             act_std = self.std_fc(hid2)
             return (means, act_std)
@@ -83,8 +83,8 @@ class ActorModel(parl.Model):
 class CriticModel(parl.Model):
     def __init__(self, critic_in_dim):
         super(CriticModel, self).__init__()
-        hid1_size = 64
-        hid2_size = 64
+        hid1_size = 512
+        hid2_size = 512
         out_dim = 1
         self.fc1 = nn.Linear(
             critic_in_dim,
